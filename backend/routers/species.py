@@ -1,10 +1,9 @@
-from typing import List
-
 from fastapi import APIRouter, Depends
+from pydantic import BaseModel
 
 from auth.auth import get_current_user
 from lib.sanitizers import Sanitizers
-from lib.swapi_service import SwapiService, Person
+from lib.swapi_service import SwapiService
 
 router = APIRouter(
     prefix="/api/v1/species",
@@ -14,7 +13,11 @@ router = APIRouter(
 )
 
 
-@router.get("/{specie_id}")
+class SpecieResponse(BaseModel):
+    name: str
+
+
+@router.get("/{specie_id}", response_model=SpecieResponse)
 async def people(specie_id: int):
     specie = SwapiService().get_specie(specie_id)
     return Sanitizers.specie(specie)

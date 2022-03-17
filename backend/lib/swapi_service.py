@@ -1,10 +1,6 @@
 import logging
-from typing import List, Optional
 
 import requests
-from pydantic import BaseModel
-
-from lib.custom_typings import URL
 
 BASE_URL = "https://swapi.dev/api"
 
@@ -39,15 +35,3 @@ class SwapiService:
         if r.status_code == 200:
             return r.json()
         return {}
-
-
-class Person(BaseModel):
-    name: Optional[Optional[str]]
-    films: Optional[List[URL]]
-    species: Optional[List[URL]]
-    starships: Optional[List[URL]]
-
-
-class PersonResponse(BaseModel):
-    next: URL
-    results: List[Person]

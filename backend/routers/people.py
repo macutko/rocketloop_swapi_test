@@ -1,10 +1,12 @@
-from typing import List
+from typing import List, Optional
 
 from fastapi import APIRouter, Depends, Query
+from pydantic import BaseModel
 
 from auth.auth import get_current_user
+from lib.custom_typings import URL
 from lib.sanitizers import Sanitizers
-from lib.swapi_service import SwapiService, Person, PersonResponse
+from lib.swapi_service import SwapiService
 
 router = APIRouter(
     prefix="/api/v1/people",
@@ -12,6 +14,18 @@ router = APIRouter(
     dependencies=[Depends(get_current_user)],
     responses={404: {"description": "Not found"}},
 )
+
+
+class Person(BaseModel):
+    name: Optional[Optional[str]]
+    films: Optional[List[URL]]
+    species: Optional[List[URL]]
+    starships: Optional[List[URL]]
+
+
+class PersonResponse(BaseModel):
+    next: URL
+    results: List[Person]
 
 
 @router.get("/", response_model=PersonResponse)
