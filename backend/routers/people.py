@@ -2,9 +2,10 @@ from enum import Enum
 from typing import List
 
 from fastapi import APIRouter, Depends, Query
+from fastapi.params import Param
 
 from auth.auth import get_current_user
-from lib.swapi import Swapi
+from lib.swapi import Swapi, Person
 
 router = APIRouter(
     prefix="/api/v1/people",
@@ -19,10 +20,14 @@ class FilterTypes(str, Enum):
     name: str = "name"
 
 
-@router.get("/")
-async def people(filter: List[str] = Query(...)):
-    all_people = Swapi().get_poeple()
+@router.get("/{filter_name}", response_model=List[Person])
+async def people(filter_name: str = Param(...), query: List[str] = Query(...), page: int = Query(None)):
+    all_people = Swapi().get_poeple(1 if page is None else page)
 
-    # for (query in request.query_params)
+    res = []
+    for person in all_people["results"]:
+        for q in query:
+            if q in person[filter_name]:
+                res.append(person)
 
-    return {"test": "here"}
+    return list({v['name']: v for v in res}.values())
