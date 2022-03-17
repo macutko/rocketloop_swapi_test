@@ -5,7 +5,27 @@ Accept: application/json
 
 ###
 
-GET http://127.0.0.1:8000/hello/User
+GET http://127.0.0.1:8000/login
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8000/api/v1/films
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8000/api/v1/people
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8000/api/v1/people?film=New
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8000/api/v1/people?key=value
 Accept: application/json
 
 ###
