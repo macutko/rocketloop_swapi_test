@@ -1,6 +1,10 @@
-from fastapi import APIRouter, Depends, Request
+from enum import Enum
+from typing import List
+
+from fastapi import APIRouter, Depends, Query
 
 from auth.auth import get_current_user
+from lib.swapi import Swapi
 
 router = APIRouter(
     prefix="/api/v1/people",
@@ -10,7 +14,15 @@ router = APIRouter(
 )
 
 
+class FilterTypes(str, Enum):
+    films: str = "film"
+    name: str = "name"
+
+
 @router.get("/")
-async def get_all_people(request: Request):
-    print(request.query_params)
+async def people(filter: List[str] = Query(...)):
+    all_people = Swapi().get_poeple()
+
+    # for (query in request.query_params)
+
     return {"test": "here"}
