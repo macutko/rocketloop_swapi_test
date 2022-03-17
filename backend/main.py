@@ -2,13 +2,14 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers import auth, people, films
+from routers import auth, people, films, species
 
 app = FastAPI()
 
 app.include_router(auth.router)
 app.include_router(people.router)
 app.include_router(films.router)
+app.include_router(species.router)
 
 origins = [
     "http://localhost",

@@ -23,8 +23,8 @@ class SwapiService:
     def get_person(self, person_id: int):
         return self.__get_swapi(f'/people/{person_id}/')
 
-    def get_species(self, page: int):
-        return self.__get_swapi(f'/species/?page={page}')
+    def get_specie(self, specie_id):
+        return self.__get_swapi(f'/species/{specie_id}/')
 
     def get_vehicles(self, page: int):
         return self.__get_swapi(f'/species/?page={page}')

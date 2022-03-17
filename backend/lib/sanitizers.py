@@ -16,3 +16,7 @@ class Sanitizers:
     @staticmethod
     def url(urls: List[str]):
         return [url.replace("https://swapi.dev/api/", "https://localhost:8000/api/v1/") for url in urls]
+
+    @staticmethod
+    def specie(specie):
+        return {"name": specie["name"]}
