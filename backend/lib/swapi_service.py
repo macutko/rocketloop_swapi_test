@@ -20,6 +20,9 @@ class SwapiService:
     def get_people(self, page: int):
         return self.__get_swapi(f'/people/?page={page}')
 
+    def get_person(self, person_id: int):
+        return self.__get_swapi(f'/people/{person_id}/')
+
     def get_species(self, page: int):
         return self.__get_swapi(f'/species/?page={page}')
 
@@ -40,18 +43,6 @@ class SwapiService:
 
 class Person(BaseModel):
     name: Optional[Optional[str]]
-    height: Optional[str]
-    mass: Optional[str]
-    hair_color: Optional[str]
-    skin_color: Optional[str]
-    eye_color: Optional[str]
-    birth_yer: Optional[str]
-    gender: Optional[str]
-    homeworld: Optional[URL]
     films: Optional[List[URL]]
     species: Optional[List[URL]]
-    vehicles: Optional[List[URL]]
     starships: Optional[List[URL]]
-    created: Optional[str]
-    edited: Optional[str]
-    url: Optional[URL]
