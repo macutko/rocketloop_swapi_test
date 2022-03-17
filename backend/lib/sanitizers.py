@@ -7,7 +7,7 @@ class Sanitizers:
     def people(ppl: List[Union[Dict[str, str], Dict[str, List[str]]]]):
         return [
             {"name": person["name"],
-             "species": person["species"],
+             "species": Sanitizers.url(person['species'] if isinstance(person['species'], list) else []),
              "films": Sanitizers.url(person['films'] if isinstance(person['films'], list) else []),
              "starships": Sanitizers.url(person['starships'] if isinstance(person['starships'], list) else [])
              }

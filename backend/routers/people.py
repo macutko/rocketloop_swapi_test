@@ -1,11 +1,10 @@
 from typing import List
 
 from fastapi import APIRouter, Depends, Query
-from starlette.testclient import Params
 
 from auth.auth import get_current_user
 from lib.sanitizers import Sanitizers
-from lib.swapi_service import SwapiService, Person
+from lib.swapi_service import SwapiService, Person, PersonResponse
 
 router = APIRouter(
     prefix="/api/v1/people",
@@ -15,15 +14,11 @@ router = APIRouter(
 )
 
 
-@router.get("/", response_model=List[Person])
+@router.get("/", response_model=PersonResponse)
 async def people(page: int = Query(None)):
     ppl = SwapiService().get_people(1 if page is None else page)
 
-    if ppl['next'] is not None:
-        ppl['next'] = Sanitizers.url(ppl['next'])
-    del ppl['count']
-
-    return Sanitizers.people(ppl['results'])
+    return {"next": ppl['next'], "results": Sanitizers.people(ppl['results'])}
 
 
 @router.get("/{person_id}")

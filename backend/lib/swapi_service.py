@@ -46,3 +46,8 @@ class Person(BaseModel):
     films: Optional[List[URL]]
     species: Optional[List[URL]]
     starships: Optional[List[URL]]
+
+
+class PersonResponse(BaseModel):
+    next: URL
+    results: List[Person]
