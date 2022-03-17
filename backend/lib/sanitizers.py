@@ -5,13 +5,15 @@ class Sanitizers:
 
     @staticmethod
     def people(ppl: List[Union[Dict[str, str], Dict[str, List[str]]]]):
-        return [
-            {"name": person["name"],
-             "species": Sanitizers.url(person['species'] if isinstance(person['species'], list) else []),
-             "films": Sanitizers.url(person['films'] if isinstance(person['films'], list) else []),
-             "starships": Sanitizers.url(person['starships'] if isinstance(person['starships'], list) else [])
-             }
-            for person in ppl]
+        return [Sanitizers.person(person) for person in ppl]
+
+    @staticmethod
+    def person(person):
+        return {"name": person["name"],
+                "species": Sanitizers.url(person['species'] if isinstance(person['species'], list) else []),
+                "films": Sanitizers.url(person['films'] if isinstance(person['films'], list) else []),
+                "starships": Sanitizers.url(person['starships'] if isinstance(person['starships'], list) else [])
+                }
 
     @staticmethod
     def url(urls: List[str]):
@@ -20,3 +22,15 @@ class Sanitizers:
     @staticmethod
     def specie(specie):
         return {"name": specie["name"]}
+
+    @staticmethod
+    def films(films):
+        return [Sanitizers.film(f) for f in films]
+
+    @staticmethod
+    def film(film):
+        return {"title": film["title"]}
+
+    @staticmethod
+    def starship(starship):
+        return {"name": starship["name"]}
