@@ -3,7 +3,7 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, Query
 from pydantic import BaseModel
 
-from auth.auth import get_current_user
+from auth.auth import AuthHandler
 from lib.custom_typings import URL
 from lib.sanitizers import Sanitizers
 from lib.swapi_service import SwapiService
@@ -11,7 +11,7 @@ from lib.swapi_service import SwapiService
 router = APIRouter(
     prefix="/api/v1/people",
     tags=["people"],
-    dependencies=[Depends(get_current_user)],
+    dependencies=[Depends(AuthHandler().get_current_user)],
     responses={404: {"description": "Not found"}},
 )
 

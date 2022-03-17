@@ -7,6 +7,9 @@ class URL(str):
             if not (v0.startswith('http://') or v0.startswith('https://')):
                 raise ValueError('Passed string value "%s" is not an'
                                  ' "http*://" URL' % (v0,))
+            if len(v0.split("//")[1].split('.')) >= 2:
+                raise ValueError('Passed string value "%s" is not an'
+                                 ' "http://domain.top" URL' % (v0,))
         # else allow None to be passed. This allows an "empty" URL instance, e.g. `URL()`
         # `URL()` evaluates False
 
