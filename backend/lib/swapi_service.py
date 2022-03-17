@@ -9,28 +9,28 @@ from lib.custom_typings import URL
 BASE_URL = "https://swapi.dev/api"
 
 
-class Swapi:
+class SwapiService:
 
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
 
     def get_films(self):
+        return self.__get_swapi('/films/')
+
+    def get_people(self, page: int):
+        return self.__get_swapi(f'/people/?page={page}')
+
+    def get_species(self, page: int):
+        return self.__get_swapi(f'/species/?page={page}')
+
+    def get_vehicles(self, page: int):
+        return self.__get_swapi(f'/species/?page={page}')
+
+    def __get_swapi(self, path: str):
         try:
-            r = requests.get(url=f'{BASE_URL}/films/')
+            r = requests.get(url=f'{BASE_URL}{path}')
         except ConnectionError:
-            self.logger.error('Connection error on swapi get films')
-            return {}
-
-        if r.status_code == 200:
-            return r.json()
-
-        return {}
-
-    def get_poeple(self, page: int):
-        try:
-            r = requests.get(url=f'{BASE_URL}/people/?page={page}')
-        except ConnectionError:
-            self.logger.error('Connection error on swapi get films')
+            self.logger.error(f'Connection error on {path}')
             return {}
 
         if r.status_code == 200:

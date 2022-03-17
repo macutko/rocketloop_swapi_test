@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 
 from auth.auth import get_current_user
-from lib.swapi import Swapi
+from lib.swapi_service import SwapiService
 
 router = APIRouter(
     prefix="/api/v1/films",
@@ -13,4 +13,4 @@ router = APIRouter(
 
 @router.get("/")
 async def get_all_films():
-    return Swapi().get_films()
+    return SwapiService().get_films()
