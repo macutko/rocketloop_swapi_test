@@ -31,22 +31,20 @@ class PersonResponse(BaseModel):
 @router.get("/", response_model=PersonResponse)
 async def get_all_people(page: int = Query(None)):
     ppl = SwapiService().get_people(1 if page is None else page)
-
     return {"next": ppl['next'], "results": Sanitizers.people(ppl['results'])}
 
-#
-# @router.get("/{person_id}")
-# async def get_person(person_id: int):
-#     return SwapiService().get_people(person_id)
 
-# @router.get("/{filter_name}", response_model=List[Person])
-# async def people(filter_name: str = Param(...), query: List[str] = Query(...), page: int = Query(None)):
-#     all_people = SwapiService().get_people(1 if page is None else page)
-#
-#     res = []
-#     for person in all_people["results"]:
-#         for q in query:
-#             if q in person[filter_name]:
-#                 res.append(person)
-#
-#     return list({v['name']: v for v in res}.values())
+@router.get("/{filter_name}", response_model=PersonResponse)
+async def people(filter_name: str, query: List[str] = Query(...), page: int = Query(None)):
+    ppl = SwapiService().get_people(1 if page is None else page)
+    next_page = ppl["next"]
+    ppl = Sanitizers.people(ppl["results"])
+
+    res = []
+    for person in ppl:
+        for q in query:
+            if q in person[filter_name]:
+                res.append(person)
+
+    print(list({v['name']: v for v in res}.values()))
+    return {"next": next_page, "results": list({v['name']: v for v in res}.values())}
