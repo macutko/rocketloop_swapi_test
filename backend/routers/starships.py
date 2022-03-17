@@ -13,10 +13,10 @@ router = APIRouter(
 )
 
 
-class SpecieResponse(BaseModel):
+class StarshipResponse(BaseModel):
     name: str
 
 
-@router.get("/{specie_id}", response_model=SpecieResponse)
-async def get_specie_by_id(specie_id: int):
-    return Sanitizers.specie(SwapiService().get_specie(specie_id))
+@router.get("/{starship_id}", response_model=StarshipResponse)
+async def get_starship_by_id(starship_id: int):
+    return Sanitizers.starship(SwapiService().get_starship(starship_id))

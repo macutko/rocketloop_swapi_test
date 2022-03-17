@@ -13,6 +13,9 @@ class SwapiService:
     def get_films(self):
         return self.__get_swapi('/films/')
 
+    def get_film(self, film_id: int):
+        return self.__get_swapi(f'/films/{film_id}')
+
     def get_people(self, page: int):
         return self.__get_swapi(f'/people/?page={page}')
 
@@ -22,8 +25,8 @@ class SwapiService:
     def get_specie(self, specie_id):
         return self.__get_swapi(f'/species/{specie_id}/')
 
-    def get_vehicles(self, page: int):
-        return self.__get_swapi(f'/species/?page={page}')
+    def get_starship(self, starship_id: int):
+        return self.__get_swapi(f'/starships/{starship_id}')
 
     def __get_swapi(self, path: str):
         try:

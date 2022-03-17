@@ -29,15 +29,15 @@ class PersonResponse(BaseModel):
 
 
 @router.get("/", response_model=PersonResponse)
-async def people(page: int = Query(None)):
+async def get_all_people(page: int = Query(None)):
     ppl = SwapiService().get_people(1 if page is None else page)
 
     return {"next": ppl['next'], "results": Sanitizers.people(ppl['results'])}
 
-
-@router.get("/{person_id}")
-async def person(person_id: int):
-    return SwapiService().get_people(person_id)
+#
+# @router.get("/{person_id}")
+# async def get_person(person_id: int):
+#     return SwapiService().get_people(person_id)
 
 # @router.get("/{filter_name}", response_model=List[Person])
 # async def people(filter_name: str = Param(...), query: List[str] = Query(...), page: int = Query(None)):
