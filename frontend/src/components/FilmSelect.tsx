@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FunctionComponent, useContext, useEffect} from "react";
+import {Dispatch, FunctionComponent, SetStateAction, useContext, useEffect} from "react";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -10,8 +10,8 @@ import {CircularProgress, Container, MenuItem} from "@mui/material";
 import {AxiosError, AxiosResponse} from "axios";
 import logger from "../lib/logger";
 
-export const FilmSelect: FunctionComponent = () => {
-    const [selectedFilm, setSelectedFilm] = React.useState("");
+export const FilmSelect: FunctionComponent<{ selectedFilm: string, setSelectedFilm: Dispatch<SetStateAction<string>> }> = (props) => {
+    const {selectedFilm, setSelectedFilm} = props;
     const {token, setToken} = useContext(CAuth);
     const {
         data,
@@ -41,9 +41,7 @@ export const FilmSelect: FunctionComponent = () => {
                     id="demo-simple-select"
                     value={selectedFilm}
                     onChange={handleChange}
-                    label={"Choose a film"}
                 >
-
                     {
                         isLoading ?
                             <Container>
