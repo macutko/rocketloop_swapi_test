@@ -1,12 +1,13 @@
 import React, {FunctionComponent} from "react";
-import "./App.css";
-import {FilmSelect} from "../components/FilmSelect";
+import {AuthContext} from "../context/AuthContext";
+import {HomePage} from "../pages/HomePage";
 
 const App: FunctionComponent = () => {
+
     return (
-        <>
-            <FilmSelect/>
-        </>
+        <AuthContext>
+            <HomePage/>
+        </AuthContext>
     );
 };
 
