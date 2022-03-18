@@ -5,7 +5,7 @@ import React, {FunctionComponent, useContext} from "react";
 import {CAuth} from "../context/AuthContext";
 
 export const HomePage: FunctionComponent = () => {
-    const {token, setToken} = useContext(CAuth);
+    const {token} = useContext(CAuth);
 
     return (
         <Container>

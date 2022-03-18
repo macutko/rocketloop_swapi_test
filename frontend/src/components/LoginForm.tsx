@@ -3,6 +3,7 @@ import {Button, Container, TextField} from "@mui/material";
 import {CAuth} from "../context/AuthContext";
 import {AuthService} from "../services/AuthService";
 import useIsMounted from "../hooks/isMounted";
+import logger from "../lib/logger";
 
 export const LoginForm: FunctionComponent = () => {
     const [name, setName] = useState<string>("");
@@ -13,10 +14,9 @@ export const LoginForm: FunctionComponent = () => {
     const submitForm = (event: any): void => {
         event.preventDefault();
 
-        AuthService.login(name, passwd).then(async (res) => {
-            const response = await res.json();
+        AuthService.login(name, passwd).then((res) => {
             if (isMounted()) {
-                setToken(response?.access_token);
+                setToken(res.data.access_token);
             }
         });
     };

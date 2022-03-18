@@ -1,9 +1,18 @@
-import {BASE_URL} from "../lib/constants";
+import {axiosInstance} from "../lib/axiosInstance";
+import {AxiosResponse} from "axios";
 
 export class FilmService {
 
 
-    static getFilms(): Promise<Response> {
-        return fetch(`${BASE_URL}/api/v1/films`);
+    static getFilms(token: string): Promise<AxiosResponse<any>> {
+        return axiosInstance.get<IFilm[]>("api/v1/films", {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
     }
+}
+
+export interface IFilm{
+    title: string
 }

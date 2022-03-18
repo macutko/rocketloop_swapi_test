@@ -1,20 +1,18 @@
-import {BASE_URL} from "../lib/constants";
+import {axiosInstance} from "../lib/axiosInstance";
+import {AxiosResponse} from "axios";
 
 export class AuthService {
 
-    static login(name: string, passwd: string): Promise<Response> {
+    static login(name: string, passwd: string): Promise<AxiosResponse<any>>{
         const formBody = [];
 
         formBody.push(encodeURIComponent("username") + "=" + encodeURIComponent(name));
         formBody.push(encodeURIComponent("password") + "=" + encodeURIComponent(passwd));
 
-        return fetch(`${BASE_URL}/token`, {
-            method: "POST",
+        return axiosInstance.post("/token", formBody.join("&"), {
             headers: {
-                "accept": "application/json",
                 "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: formBody.join("&")
+            }
         });
     }
 }
