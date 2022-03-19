@@ -10,14 +10,18 @@ class Sanitizers:
     @staticmethod
     def person(person):
         return {"name": person["name"],
-                "species": Sanitizers.url(person['species'] if isinstance(person['species'], list) else []),
-                "films": Sanitizers.url(person['films'] if isinstance(person['films'], list) else []),
-                "starships": Sanitizers.url(person['starships'] if isinstance(person['starships'], list) else [])
+                "species": Sanitizers.urls(person['species'] if isinstance(person['species'], list) else []),
+                "films": Sanitizers.urls(person['films'] if isinstance(person['films'], list) else []),
+                "starships": Sanitizers.urls(person['starships'] if isinstance(person['starships'], list) else [])
                 }
 
     @staticmethod
-    def url(urls: List[str]):
-        return [url.replace("https://swapi.dev/api/", "http://localhost:8000/api/v1/") for url in urls]
+    def urls(urls: List[str]):
+        return [Sanitizers.url(url) for url in urls]
+
+    @staticmethod
+    def url(url: str):
+        return url.replace("https://swapi.dev/api/", "http://localhost:8000/api/v1/")
 
     @staticmethod
     def specie(specie):
@@ -29,7 +33,7 @@ class Sanitizers:
 
     @staticmethod
     def film(film):
-        return {"title": film["title"]}
+        return {"title": film["title"], "url": Sanitizers.url(film["url"])}
 
     @staticmethod
     def starship(starship):

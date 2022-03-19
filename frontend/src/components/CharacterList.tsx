@@ -1,7 +1,7 @@
 import React, {FunctionComponent, useContext, useEffect} from "react";
 import {useQuery} from "react-query";
 import {AxiosError, AxiosResponse} from "axios";
-import {CharacterService, ICharacter} from "../services/CharacterService";
+import {CharacterService, ICharacterResponse} from "../services/CharacterService";
 import {CAuth} from "../context/AuthContext";
 import logger from "../lib/logger";
 import {CharacterItem} from "./CharacterItem";
@@ -14,24 +14,21 @@ export const CharacterList: FunctionComponent<{ selectedFilm: string }> = (props
         data,
         isLoading,
         error
-    } = useQuery<unknown, AxiosError, AxiosResponse<ICharacter[]>>("characters", () => CharacterService.getFilteredPeople(token, props.selectedFilm, 0));
+    } = useQuery<unknown, AxiosError, AxiosResponse<ICharacterResponse>>("characters",
+        () => CharacterService.getFilteredPeople(token, props.selectedFilm, 0));
 
     useEffect(() => {
+        logger.debug(props.selectedFilm);
         logger.debug(data);
-    }, [data]);
+    }, [data, props.selectedFilm]);
 
     return (
-        props.selectedFilm == ""
-            ?
-            <h1>Select a film please</h1>
+        isLoading ?
+            <CircularProgress/>
             :
-            (
-                isLoading ?
-                    <CircularProgress/>
-                    :
-                    <CharacterItem data={data?.data[0]}/>
-
-            )
+            <>
+                {data?.data.results.map((character) => <CharacterItem key={character.name} data={character}/>)}
+            </>
 
     );
 };

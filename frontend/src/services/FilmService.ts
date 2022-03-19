@@ -13,6 +13,7 @@ export class FilmService {
     }
 }
 
-export interface IFilm{
+export interface IFilm {
     title: string
+    url: string
 }

@@ -5,15 +5,20 @@ export class CharacterService {
 
 
     static getFilteredPeople(token: string, filmName: string, page: number): Promise<AxiosResponse<any>> {
-        return axiosInstance.get<ICharacter[]>("api/v1/people/name", {
+        return axiosInstance.get<ICharacter[]>("api/v1/people/films", {
             params: {
-                query: "Luke"
+                query: filmName
             },
             headers: {
                 "Authorization": `Bearer ${token}`
             }
         });
     }
+}
+
+export interface ICharacterResponse {
+    next: string,
+    results: ICharacter[]
 }
 
 export interface ICharacter {

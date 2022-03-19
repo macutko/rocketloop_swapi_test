@@ -2,8 +2,9 @@ from typing import List
 
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
-from auth.auth import Token, AuthHandler
 
+from auth.auth import AuthHandler
+from lib.custom_typings import URL
 from lib.sanitizers import Sanitizers
 from lib.swapi_service import SwapiService
 
@@ -17,11 +18,14 @@ router = APIRouter(
 
 class Film(BaseModel):
     title: str
+    url: URL
 
 
 @router.get("/", response_model=List[Film])
 async def get_all_films():
-    return Sanitizers.films(SwapiService().get_films()["results"])
+    f = Sanitizers.films(SwapiService().get_films()["results"])
+    print(f)
+    return f
 
 
 @router.get("/{film_id}", response_model=Film)

@@ -17,7 +17,13 @@ export const HomePage: FunctionComponent = () => {
                     :
                     <>
                         <FilmSelect selectedFilm={selectedFilm} setSelectedFilm={setSelectedFilm}/>
-                        <CharacterList selectedFilm={selectedFilm}/>
+                        {
+                            selectedFilm == ""
+                                ?
+                                <h1>Select a film please</h1>
+                                :
+                                <CharacterList selectedFilm={selectedFilm}/>
+                        }
                     </>
             }
 

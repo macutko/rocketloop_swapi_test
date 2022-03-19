@@ -8,7 +8,6 @@ import {CAuth} from "../context/AuthContext";
 import {useQuery} from "react-query";
 import {CircularProgress, Container, MenuItem} from "@mui/material";
 import {AxiosError, AxiosResponse} from "axios";
-import logger from "../lib/logger";
 
 export const FilmSelect: FunctionComponent<{ selectedFilm: string, setSelectedFilm: Dispatch<SetStateAction<string>> }> = (props) => {
     const {selectedFilm, setSelectedFilm} = props;
@@ -23,9 +22,6 @@ export const FilmSelect: FunctionComponent<{ selectedFilm: string, setSelectedFi
     const handleChange = (event: any): void => {
         setSelectedFilm(event.target.value);
     };
-    useEffect(() => {
-        logger.debug(data);
-    }, [data]);
 
     useEffect(() => {
         if (error && error.response && error.response.status == 401) {
@@ -51,7 +47,7 @@ export const FilmSelect: FunctionComponent<{ selectedFilm: string, setSelectedFi
                             null
                     }
                     {data?.data.map((film) => <MenuItem key={film.title}
-                        value={10}>{film.title}</MenuItem>)}
+                        value={film.url}>{film.title}</MenuItem>)}
                 </Select>
             </FormControl>
         </Box>

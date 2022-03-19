@@ -3,7 +3,6 @@ import {ICharacter} from "../services/CharacterService";
 
 export const CharacterItem: FunctionComponent<{ data: ICharacter | undefined }> = (props) => {
 
-
     return (
         <h1>
             {props.data?.name}
