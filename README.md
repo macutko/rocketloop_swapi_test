@@ -2,6 +2,11 @@
 
 To run this project either start each project inividually or just run the `docker-compose up`. The backend has a few tests to run using the `tests.sh`. 
 
+## Login
+
+username: admin
+password: password 
+
 # TODO
 
 - Need to make the CharacterItem component clickable to open a CharacterInfo modal
