@@ -21,6 +21,7 @@ class Film(BaseModel):
     url: URL
 
 
+@router.get('', response_model=List[Film], include_in_schema=False)
 @router.get("/", response_model=List[Film])
 async def get_all_films():
     f = Sanitizers.films(SwapiService().get_films()["results"])
